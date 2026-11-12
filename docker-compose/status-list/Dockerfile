@@ -9,6 +9,7 @@ RUN \
 
 WORKDIR /status-list
 COPY config/config_service.py /status-list/app/config_service.py
+COPY certs /status-list/certs
 
 COPY endpoints/get_status_list.py /tmp/get_status_list.py
 RUN cat /tmp/get_status_list.py >> app/status_list_endpoints.py && rm /tmp/get_status_list.py

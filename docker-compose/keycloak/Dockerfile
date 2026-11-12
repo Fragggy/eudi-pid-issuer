@@ -18,4 +18,5 @@ COPY --from=downloader /tmp/abca-keycloak-ext-*.jar /opt/keycloak/providers/abca
 USER root
 RUN chmod 644 /opt/keycloak/providers/abca-keycloak-ext.jar
 COPY conf/keycloak.conf /opt/keycloak/conf/keycloak.conf
+COPY realms/ /opt/keycloak/data/import/
 USER keycloak
