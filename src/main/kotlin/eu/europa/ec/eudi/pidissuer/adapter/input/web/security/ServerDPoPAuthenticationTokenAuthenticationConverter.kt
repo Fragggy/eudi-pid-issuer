@@ -118,11 +118,18 @@ private fun ServerHttpRequest.authorization(): DPoPAccessToken? =
 
 /**
  * Gets the uri of the current [ServerHttpRequest]. The uri does not contain query parameters or fragments.
+ *
+ * PoC note: this issuer is always exposed behind a TLS-terminating reverse proxy (Cloudflare →
+ * haproxy), so the external scheme is always `https` even though the backend connection is plain
+ * HTTP. `server.forward-headers-strategy` is not reliably applied before the DPoP converter runs
+ * in the Spring Security filter chain, which made the DPoP `htu` claim (always `https`) fail
+ * validation against the reconstructed `http` URI. We therefore pin the scheme to `https` here.
  */
 private fun ServerHttpRequest.uri(): Uri =
     uri
         .toUri()
         .buildUpon()
+        .scheme("https")
         .query(null)
         .fragment(null)
         .build()
