@@ -61,7 +61,6 @@ services:
     volumes:
       - ./docker-compose/keycloak/realms/:/opt/keycloak/data/import
       - ./docker-compose/keycloak/certs/:/etc/ssl/certs/
-      - ./docker-compose/keycloak/conf/keycloak.conf:/opt/keycloak/conf/keycloak.conf
     networks:
       - default
 
@@ -76,7 +75,6 @@ services:
     environment:
       API_key: aaa-bbb-ccc
     volumes:
-      - ./docker-compose/status-list/config/config_service.py:/status-list/app/config_service.py
       - ./docker-compose/status-list/certs:/status-list/certs
       - status-lists:/var/opt/status_lists
       - status-lists-backups:/var/opt/status_list_backup
@@ -84,8 +82,7 @@ services:
       - default
 
   pid-issuer:
-    image: ghcr.io/eu-digital-identity-wallet/eudi-srv-pid-issuer:edge
-    pull_policy: always
+    build: ./docker-compose/pid-issuer
     container_name: pid-issuer
     depends_on:
       keycloak:
@@ -94,8 +91,6 @@ services:
         condition: service_healthy
       status-list:
         condition: service_started
-    volumes:
-      - ./docker-compose/pid-issuer/issuer-keys.jks:/issuer-keys.jks
     environment:
       - JAVA_TOOL_OPTIONS=-XX:MaxDirectMemorySize=64M
       - SPRING_PROFILES_ACTIVE=insecure
@@ -145,7 +140,7 @@ services:
       - default
 
   haproxy:
-    image: haproxy:2.8.3
+    build: ./docker-compose/haproxy
     container_name: haproxy
     depends_on:
       keycloak:
@@ -155,7 +150,6 @@ services:
       status-list:
         condition: service_started
     volumes:
-      - ./docker-compose/haproxy/haproxy.conf:/usr/local/etc/haproxy/haproxy.cfg
       - ./docker-compose/haproxy/certs/:/etc/ssl/certs/
     networks:
       - default

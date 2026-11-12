@@ -17,4 +17,5 @@ FROM quay.io/keycloak/keycloak:26.6.2-2
 COPY --from=downloader /tmp/abca-keycloak-ext-*.jar /opt/keycloak/providers/abca-keycloak-ext.jar
 USER root
 RUN chmod 644 /opt/keycloak/providers/abca-keycloak-ext.jar
+COPY conf/keycloak.conf /opt/keycloak/conf/keycloak.conf
 USER keycloak
