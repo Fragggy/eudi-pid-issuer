@@ -4,7 +4,7 @@
     {
       "id": "60b8ba5f-c73f-4976-b0da-48d0e53335de",
       "createdTimestamp": 1700060364127,
-      "username": "tneal",
+      "username": "munzlind",
       "enabled": true,
       "totp": false,
       "email": "dennis.munzlinger@bitsplit.de",
@@ -19,7 +19,7 @@
           "male"
         ],
         "birthdate": [
-          "1955-04-12"
+          "1983-02-23"
         ],
         "street": [
           "101 Trauner"
