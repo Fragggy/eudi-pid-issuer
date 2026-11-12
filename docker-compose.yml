@@ -43,8 +43,6 @@ services:
       - KC_HTTP_RELATIVE_PATH=/idp
       - KC_HOSTNAME=https://issuer.bitsplit.de/idp
       - KC_HOSTNAME_BACKCHANNEL_DYNAMIC=true
-      - KC_HTTPS_CERTIFICATE_FILE=/etc/ssl/certs/keycloak.tls.crt
-      - KC_HTTPS_CERTIFICATE_KEY_FILE=/etc/ssl/certs/keycloak.tls.key
       - KC_BOOTSTRAP_ADMIN_USERNAME=admin
       - KC_BOOTSTRAP_ADMIN_PASSWORD=password
     healthcheck:
@@ -100,7 +98,7 @@ services:
       - SPRING_HTTP_CODECS_MAXINMEMORYSIZE=8MB
       - ISSUER_PUBLICURL=https://issuer.bitsplit.de/pid-issuer
       - ISSUER_AUTHORIZATIONSERVER_PUBLICURL=https://issuer.bitsplit.de/idp/realms/pid-issuer-realm
-      - ISSUER_AUTHORIZATIONSERVER_INTROSPECTION=https://keycloak:8443/idp/realms/pid-issuer-realm/protocol/openid-connect/token/introspect
+      - ISSUER_AUTHORIZATIONSERVER_INTROSPECTION=http://keycloak:8080/idp/realms/pid-issuer-realm/protocol/openid-connect/token/introspect
       - ISSUER_KEYSTORE_FILE=file:/issuer-keys.jks
       - ISSUER_KEYSTORE_TYPE=JKS
       - ISSUER_KEYSTORE_PASSWORD=keys
@@ -118,7 +116,7 @@ services:
       - ISSUER_LEARNINGCREDENTIAL_SIGNING_KEY_PASSWORD=issuance
       - ISSUER_ACCESSCERTIFICATE_ALIAS=access-certificate
       - ISSUER_ACCESSCERTIFICATE_PASSWORD=access-certificate
-      - ISSUER_KEYCLOAK_SERVER_URL=https://keycloak:8443/idp
+      - ISSUER_KEYCLOAK_SERVER_URL=http://keycloak:8080/idp
       - ISSUER_KEYCLOAK_AUTHENTICATION_REALM=master
       - ISSUER_KEYCLOAK_CLIENT_ID=admin-cli
       - ISSUER_KEYCLOAK_USERNAME=admin
