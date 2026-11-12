@@ -41,7 +41,7 @@ services:
       - KC_PROXY_HEADERS=forwarded
       - KC_HTTP_ENABLED=true
       - KC_HTTP_RELATIVE_PATH=/idp
-      - KC_HOSTNAME=https://localhost/idp
+      - KC_HOSTNAME=https://issuer.bitsplit.de/idp
       - KC_HOSTNAME_BACKCHANNEL_DYNAMIC=true
       - KC_HTTPS_CERTIFICATE_FILE=/etc/ssl/certs/keycloak.tls.crt
       - KC_HTTPS_CERTIFICATE_KEY_FILE=/etc/ssl/certs/keycloak.tls.key
@@ -103,8 +103,8 @@ services:
       - SPRING_SECURITY_OAUTH2_RESOURCESERVER_OPAQUETOKEN_CLIENTID=pid-issuer-srv
       - SPRING_SECURITY_OAUTH2_RESOURCESERVER_OPAQUETOKEN_CLIENTSECRET=zIKAV9DIIIaJCzHCVBPlySgU8KgY68U2
       - SPRING_HTTP_CODECS_MAXINMEMORYSIZE=8MB
-      - ISSUER_PUBLICURL=https://localhost/pid-issuer
-      - ISSUER_AUTHORIZATIONSERVER_PUBLICURL=https://localhost/idp/realms/pid-issuer-realm
+      - ISSUER_PUBLICURL=https://issuer.bitsplit.de/pid-issuer
+      - ISSUER_AUTHORIZATIONSERVER_PUBLICURL=https://issuer.bitsplit.de/idp/realms/pid-issuer-realm
       - ISSUER_AUTHORIZATIONSERVER_INTROSPECTION=https://keycloak:8443/idp/realms/pid-issuer-realm/protocol/openid-connect/token/introspect
       - ISSUER_KEYSTORE_FILE=file:/issuer-keys.jks
       - ISSUER_KEYSTORE_TYPE=JKS
@@ -147,9 +147,6 @@ services:
   haproxy:
     image: haproxy:2.8.3
     container_name: haproxy
-    ports:
-      - "443:443"
-      - "80:80"
     depends_on:
       keycloak:
         condition: service_healthy
@@ -167,3 +164,13 @@ volumes:
   status-lists:
   status-lists-backups:
   postgres:
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    restart: unless-stopped
+    depends_on:
+      haproxy:
+        condition: service_started
+    command: tunnel --no-autoupdate run --token ${ISSUER_TUNNEL_TOKEN}
+    networks:
+      - default
