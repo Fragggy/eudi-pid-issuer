@@ -37,10 +37,11 @@ services:
       - --import-realm
       - --features=dpop,passkeys
     environment:
-      - KC_PROXY_HEADERS=forwarded
+      - KC_PROXY_HEADERS=xforwarded
       - KC_HTTP_ENABLED=true
       - KC_HTTP_RELATIVE_PATH=/idp
       - KC_HOSTNAME=https://issuer.bitsplit.de/idp
+      - KC_HOSTNAME_STRICT_HTTPS=true
       - KC_HOSTNAME_BACKCHANNEL_DYNAMIC=true
       - KC_BOOTSTRAP_ADMIN_USERNAME=admin
       - KC_BOOTSTRAP_ADMIN_PASSWORD=password
