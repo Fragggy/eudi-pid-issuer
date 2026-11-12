@@ -174,13 +174,3 @@ volumes:
   status-lists:
   status-lists-backups:
   postgres:
-
-  cloudflared:
-    image: cloudflare/cloudflared:latest
-    restart: unless-stopped
-    depends_on:
-      haproxy:
-        condition: service_started
-    command: tunnel --no-autoupdate run --token ${ISSUER_TUNNEL_TOKEN}
-    networks:
-      - default
