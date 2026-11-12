@@ -7,10 +7,10 @@
       "username": "tneal",
       "enabled": true,
       "totp": false,
-      "email": "tyler.neal@example.com",
+      "email": "dennis.munzlinger@bitsplit.de",
       "emailVerified": true,
-      "firstName": "Tyler",
-      "lastName": "Neal",
+      "firstName": "Dennis",
+      "lastName": "Munzlinger",
       "attributes": {
         "gender": [
           "1"
@@ -49,10 +49,10 @@
           "AT"
         ],
         "birth_family_name": [
-          "Neal"
+          "Munzlinger"
         ],
         "birth_given_name": [
-          "Tyler"
+          "Dennis"
         ],
         "administrative_validity_start_date": [
           "2024-05-21"
